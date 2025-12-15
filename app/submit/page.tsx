@@ -52,7 +52,7 @@ export default function SubmitPage() {
 
   if (submitted) {
     return (
-      <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200">
+      <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200 pb-8 sm:pb-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-12 md:py-16 lg:py-20">
           <div className="text-center">
             <div className="mb-6 sm:mb-8">
@@ -89,7 +89,7 @@ export default function SubmitPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200">
+    <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200 pb-8 sm:pb-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-12 md:py-16 lg:py-20">
         {/* Header */}
         <div className="mb-12 sm:mb-16">

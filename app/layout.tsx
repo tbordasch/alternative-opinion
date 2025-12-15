@@ -20,9 +20,9 @@ export default function RootLayout({
       <body className="h-full">
         <ThemeScript />
         <ThemeProvider>
-          <div className="h-screen flex flex-col">
+          <div className="min-h-screen md:h-screen flex flex-col">
             <Navbar />
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1 md:overflow-hidden">
               {children}
             </div>
           </div>

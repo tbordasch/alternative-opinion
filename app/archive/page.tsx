@@ -12,7 +12,7 @@ export default async function ArchivePage() {
   const opinions = await getPastOpinions();
 
   return (
-    <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200">
+    <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200 pb-8 sm:pb-12">
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12 lg:py-16">
         {/* Archive Header */}
         <header className="mb-10 sm:mb-12 md:mb-16 pb-8 sm:pb-10 text-center">
