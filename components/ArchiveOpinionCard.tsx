@@ -153,32 +153,32 @@ export default function ArchiveOpinionCard({
                         className="text-left p-4 sm:p-5 flex flex-col cursor-pointer hover:bg-[#5C3A21]/5 dark:hover:bg-white/5 transition-colors"
                       >
                         <p className="text-xs sm:text-sm text-[#5C3A21] dark:text-white/90 mb-3 sm:mb-4 whitespace-pre-line leading-relaxed font-light break-words">
-                          {comment.content}
-                        </p>
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 pt-2 sm:pt-3 border-t border-[#5C3A21]/10 dark:border-white/10">
-                          <span className="text-xs text-[#5C3A21]/70 dark:text-white/70 font-light">
-                            {new Date(comment.created_at).toLocaleDateString('en-US', {
-                              month: 'short',
-                              day: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </span>
-                          <button
+                      {comment.content}
+                    </p>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 pt-2 sm:pt-3 border-t border-[#5C3A21]/10 dark:border-white/10">
+                      <span className="text-xs text-[#5C3A21]/70 dark:text-white/70 font-light">
+                        {new Date(comment.created_at).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </span>
+                      <button
                             onClick={(e) => {
                               e.stopPropagation();
                               handleLike(comment.id);
                             }}
-                            className={`flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full transition-all duration-200 text-xs font-light self-start sm:self-auto ${
-                              comment.user_liked
-                                ? 'bg-[#8DA070]/10 dark:bg-[#5B9BD5]/20 text-[#8DA070] dark:text-[#5B9BD5] border border-[#8DA070] dark:border-[#5B9BD5]'
-                                : 'bg-white dark:bg-[#253447] border border-[#5C3A21]/10 dark:border-white/20 text-[#5C3A21]/70 dark:text-white/70 hover:bg-[#8DA070]/5 dark:hover:bg-[#5B9BD5]/10'
-                            }`}
-                          >
-                            <span className="text-sm">{comment.user_liked ? '❤️' : '🤍'}</span>
-                            <span>{comment.likes_count || 0}</span>
-                          </button>
-                        </div>
+                        className={`flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full transition-all duration-200 text-xs font-light self-start sm:self-auto ${
+                          comment.user_liked
+                            ? 'bg-[#8DA070]/10 dark:bg-[#5B9BD5]/20 text-[#8DA070] dark:text-[#5B9BD5] border border-[#8DA070] dark:border-[#5B9BD5]'
+                            : 'bg-white dark:bg-[#253447] border border-[#5C3A21]/10 dark:border-white/20 text-[#5C3A21]/70 dark:text-white/70 hover:bg-[#8DA070]/5 dark:hover:bg-[#5B9BD5]/10'
+                        }`}
+                      >
+                        <span className="text-sm">{comment.user_liked ? '❤️' : '🤍'}</span>
+                        <span>{comment.likes_count || 0}</span>
+                      </button>
+                    </div>
                       </div>
 
                       {/* Replies section - expandable */}
@@ -198,8 +198,8 @@ export default function ArchiveOpinionCard({
                                     minute: '2-digit',
                                   })}
                                 </span>
-                              </div>
-                            ))}
+                  </div>
+                ))}
                           </div>
                         </div>
                       )}
