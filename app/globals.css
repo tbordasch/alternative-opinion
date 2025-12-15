@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --background: #F8F8F8;
+  --foreground: #4A5568;
+}
+
+.dark {
+  --background: #1a2332;
+  --foreground: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Opinion text styling */
+.opinion-text {
+  font-family: 'Crimson Text', Georgia, 'Times New Roman', serif;
+  font-size: 1.125rem;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 640px) {
+  .opinion-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+}
+
+@media (min-width: 768px) {
+  .opinion-text {
+    font-size: 1.5rem;
+    line-height: 1.85;
+  }
+}
+
+@media (min-width: 1024px) {
+  .opinion-text {
+    font-size: 1.75rem;
+    line-height: 1.9;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-15px) translateX(12px) rotate(2deg) scale(1.02);
+  }
+  50% {
+    transform: translateY(-8px) translateX(-10px) rotate(-1.5deg) scale(0.98);
+  }
+  75% {
+    transform: translateY(12px) translateX(15px) rotate(1.5deg) scale(1.01);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes floatDelayed {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(12px) translateX(-15px) rotate(-2deg) scale(0.99);
+  }
+  50% {
+    transform: translateY(-12px) translateX(10px) rotate(1.5deg) scale(1.02);
+  }
+  75% {
+    transform: translateY(-5px) translateX(-12px) rotate(-1deg) scale(0.99);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translateY(-18px) translateX(15px) rotate(2.5deg) scale(1.03);
+  }
+  66% {
+    transform: translateY(14px) translateX(-18px) rotate(-2deg) scale(0.97);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes floatWave {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-16px) translateX(18px) rotate(3deg);
+  }
+  50% {
+    transform: translateY(10px) translateX(-14px) rotate(-2.5deg);
+  }
+  75% {
+    transform: translateY(-8px) translateX(15px) rotate(1.5deg);
+  }
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 25s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatDelayed 30s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 35s ease-in-out infinite;
+}
+
+.animate-float-wave {
+  animation: floatWave 28s ease-in-out infinite;
+}
+
+.animate-scroll-down {
+  animation: scrollDown 1.5s ease-in-out infinite;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+}
