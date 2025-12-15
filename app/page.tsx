@@ -13,9 +13,9 @@ export default async function Home() {
   const comments = currentOpinion ? await getComments(currentOpinion.id, 'newest') : [];
 
   return (
-    <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200">
+    <main className="h-full bg-white dark:bg-[#1a2332] transition-colors duration-200">
       {/* Mobile: Stacked layout, Desktop: Split view */}
-      <div className="min-h-screen flex flex-col md:flex-row md:h-screen">
+      <div className="h-full flex flex-col md:flex-row">
         {/* Comments Section - Bottom on mobile, Left on desktop */}
         <div className="w-full md:w-1/2 lg:w-2/5 flex flex-col border-t md:border-t-0 md:border-r border-[#5C3A21]/10 dark:border-white/10 overflow-y-auto scrollbar-hide bg-white dark:bg-[#1a2332] transition-colors duration-200 order-1 md:order-1">
           {currentOpinion ? (

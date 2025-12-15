@@ -237,7 +237,7 @@ export default function CommentsSection({
             className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-200 font-light min-w-[45px] sm:min-w-0 bg-white dark:bg-[#253447] border border-[#5C3A21]/20 dark:border-white/20 shadow-sm dark:shadow-none ${
               sortBy === 'random'
                 ? 'bg-[#8B4513] dark:bg-[#5B9BD5] text-white shadow-sm dark:shadow-none'
-                : 'text-[#5C3A21] dark:text-white/70 hover:text-[#8B4513] dark:hover:text-[#5B9BD5]'
+                : 'text-[#3d2815] dark:text-white/70 hover:text-[#8B4513] dark:hover:text-[#5B9BD5]'
             }`}
           >
             Random
