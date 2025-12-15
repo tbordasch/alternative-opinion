@@ -107,6 +107,13 @@ git config --global user.email "tb.bordasch@gmail.com"
 ```
 Dann nochmal: `git commit -m "..."`
 
+### Problem: "The current branch main has no upstream branch"
+**Lösung:** 
+```powershell
+git push --set-upstream origin main
+```
+**Was passiert:** Git verbindet deinen lokalen Branch mit dem GitHub-Branch. Danach kannst du einfach `git push` verwenden.
+
 ### Problem: "Updates were rejected"
 **Lösung:** 
 ```powershell
