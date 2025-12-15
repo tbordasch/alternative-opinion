@@ -60,21 +60,6 @@ export default async function Home() {
             </div>
           )}
         </div>
-          {currentOpinion ? (
-            <div className="flex-1 p-4 sm:p-6 md:p-8">
-              <CommentsSection
-                opinionId={currentOpinion.id}
-                initialComments={comments}
-              />
-            </div>
-          ) : (
-            <div className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-8">
-              <p className="text-sm sm:text-base text-[#5C3A21]/70 dark:text-white/70 text-center font-light">
-                No opinion available yet. Please add an opinion to the database.
-              </p>
-            </div>
-          )}
-        </div>
       </div>
     </main>
   );
