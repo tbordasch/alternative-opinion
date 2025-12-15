@@ -6,13 +6,11 @@ import DarkModeToggle from './DarkModeToggle';
 
 function getNextRotationDay(): { date: Date; dayName: string } {
   const now = new Date();
-  const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const currentDay = now.getDay();
   
-  // Rotation days: Tuesday (2), Friday (5), Sunday (0)
-  const rotationDays = [2, 5, 0]; // Tuesday, Friday, Sunday
+  const rotationDays = [2, 5, 0];
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   
-  // Find next rotation day
   let daysUntilNext = 0;
   let nextDay = 0;
   
@@ -25,10 +23,7 @@ function getNextRotationDay(): { date: Date; dayName: string } {
     }
   }
   
-  // If today is a rotation day, check if we should use today or next one
-  // We'll use the next one to give a full day
   if (daysUntilNext === 0 && rotationDays.includes(currentDay)) {
-    // Find the next rotation day after today
     for (let i = 1; i < 7; i++) {
       const checkDay = (currentDay + i) % 7;
       if (rotationDays.includes(checkDay)) {
@@ -82,8 +77,7 @@ export default function Navbar() {
             href="/submit" 
             className="px-2 sm:px-2.5 md:px-3 py-1 sm:py-1.5 rounded-full bg-[#8DA070]/10 dark:bg-[#5B9BD5]/20 hover:bg-[#8DA070] dark:hover:bg-[#5B9BD5] border border-[#8DA070]/30 dark:border-[#5B9BD5]/30 hover:border-[#8DA070] dark:hover:border-[#5B9BD5] flex items-center justify-center transition-all duration-200 group"
           >
-            <span className="text-[10px] sm:text-xs text-[#5C3A21] dark:text-white group-hover:text-white font-light whitespace-nowrap hidden sm:inline">Submit</span>
-            <span className="text-[10px] sm:text-xs text-[#5C3A21] dark:text-white group-hover:text-white font-light whitespace-nowrap sm:hidden">Submit</span>
+            <span className="text-[10px] sm:text-xs text-[#5C3A21] dark:text-white group-hover:text-white font-light whitespace-nowrap">Submit</span>
           </Link>
           <Link 
             href="/contact" 

@@ -3,18 +3,16 @@ import Link from 'next/link';
 import ArchiveOpinionCard from '@/components/ArchiveOpinionCard';
 import { unstable_noStore as noStore } from 'next/cache';
 
-// Disable caching - always fetch fresh data
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function ArchivePage() {
-  noStore(); // Ensure no caching
+  noStore();
   const opinions = await getPastOpinions();
 
   return (
     <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200 pb-8 sm:pb-12">
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-12 lg:py-16">
-        {/* Archive Header */}
         <header className="mb-10 sm:mb-12 md:mb-16 pb-8 sm:pb-10 text-center">
           <Link
             href="/"
@@ -30,7 +28,6 @@ export default async function ArchivePage() {
           </p>
         </header>
 
-        {/* Opinions List */}
         {opinions.length === 0 ? (
           <div className="bg-white dark:bg-[#253447] rounded-lg p-10 sm:p-12 md:p-16 border border-gray-200 dark:border-white/10">
             <p className="text-sm sm:text-base text-[#5C3A21]/70 dark:text-white/70 text-center font-light">

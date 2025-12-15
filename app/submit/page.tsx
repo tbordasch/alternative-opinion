@@ -91,7 +91,6 @@ export default function SubmitPage() {
   return (
     <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200 pb-8 sm:pb-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-12 md:py-16 lg:py-20">
-        {/* Header */}
         <div className="mb-12 sm:mb-16">
           <Link
             href="/"
@@ -102,12 +101,14 @@ export default function SubmitPage() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-[#5C3A21] dark:text-white mb-4 sm:mb-6">
             Submit Opinion
           </h1>
-          <p className="text-sm sm:text-base text-[#5C3A21]/70 dark:text-white/70 font-light">
+          <p className="text-sm sm:text-base text-[#5C3A21]/70 dark:text-white/70 font-light mb-4 sm:mb-6">
             Share your perspective
+          </p>
+          <p className="text-sm sm:text-base text-[#5C3A21]/80 dark:text-white/80 font-light leading-relaxed">
+            Submit an opinion about something—perhaps controversial or thought-provoking—that could be published on this website. We welcome perspectives that encourage reflection and meaningful dialogue.
           </p>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           <div>
             <label htmlFor="opinion" className="block text-sm sm:text-base text-[#5C3A21] dark:text-white font-light mb-3 sm:mb-4">
@@ -159,7 +160,6 @@ export default function SubmitPage() {
           </div>
         </form>
 
-        {/* Guidelines */}
         <div className="mt-12 sm:mt-16 pt-8 sm:pt-10 border-t border-[#5C3A21]/10 dark:border-white/10">
           <h2 className="text-lg sm:text-xl font-light text-[#5C3A21] dark:text-white mb-4 sm:mb-6">
             Submission Guidelines

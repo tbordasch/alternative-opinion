@@ -12,7 +12,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
 
-// Helper to get or create anonymous session ID
 export function getSessionId(): string {
   if (typeof window === 'undefined') return '';
   
@@ -23,6 +22,3 @@ export function getSessionId(): string {
   }
   return sessionId;
 }
-
-
-

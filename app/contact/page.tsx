@@ -10,7 +10,6 @@ export default async function ContactPage() {
   return (
     <main className="min-h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200 pb-8 sm:pb-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-12 md:py-16 lg:py-20">
-        {/* Header */}
         <div className="mb-12 sm:mb-16">
           <Link
             href="/"
@@ -26,7 +25,6 @@ export default async function ContactPage() {
           </p>
         </div>
 
-        {/* Content */}
         <div className="space-y-10 sm:space-y-12 md:space-y-16">
           <section>
             <h2 className="text-xl sm:text-2xl font-light text-[#5C3A21] dark:text-white mb-4 sm:mb-6">

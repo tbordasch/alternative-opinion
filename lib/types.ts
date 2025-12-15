@@ -32,6 +32,3 @@ export interface Like {
   session_id: string;
   created_at: string;
 }
-
-
-

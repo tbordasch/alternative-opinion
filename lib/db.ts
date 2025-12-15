@@ -1,16 +1,13 @@
 import { supabase } from './supabase';
 import type { Opinion, Comment, Reply } from './types';
 
-// Helper function to get next rotation day (Tuesday, Friday, or Sunday)
 export function getNextRotationDay(): { date: Date; dayName: string } {
   const now = new Date();
-  const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const currentDay = now.getDay();
   
-  // Rotation days: Tuesday (2), Friday (5), Sunday (0)
-  const rotationDays = [2, 5, 0]; // Tuesday, Friday, Sunday
+  const rotationDays = [2, 5, 0];
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   
-  // Find next rotation day
   let daysUntilNext = 0;
   let nextDay = 0;
   
@@ -23,10 +20,7 @@ export function getNextRotationDay(): { date: Date; dayName: string } {
     }
   }
   
-  // If today is a rotation day, check if we should use today or next one
-  // We'll use the next one to give a full day
   if (daysUntilNext === 0 && rotationDays.includes(currentDay)) {
-    // Find the next rotation day after today
     for (let i = 1; i < 7; i++) {
       const checkDay = (currentDay + i) % 7;
       if (rotationDays.includes(checkDay)) {
@@ -47,21 +41,18 @@ export function getNextRotationDay(): { date: Date; dayName: string } {
   };
 }
 
-// Helper function to calculate which opinion to show based on rotation schedule
 function calculateOpinionIndex(opinions: Opinion[]): number {
   if (opinions.length === 0) return 0;
   
-  // Get the oldest opinion's published_at as the start date
   const oldestOpinion = opinions[opinions.length - 1];
   const startDate = new Date(oldestOpinion.published_at);
   startDate.setHours(0, 0, 0, 0);
   
-  // Count rotation days (Tuesday, Friday, Sunday) since start
   const now = new Date();
   now.setHours(0, 0, 0, 0);
   
   let rotationCount = 0;
-  const rotationDays = [2, 5, 0]; // Tuesday, Friday, Sunday
+  const rotationDays = [2, 5, 0];
   
   let currentDate = new Date(startDate);
   while (currentDate <= now) {
@@ -72,16 +63,12 @@ function calculateOpinionIndex(opinions: Opinion[]): number {
     currentDate.setDate(currentDate.getDate() + 1);
   }
   
-  // Subtract 1 because we want the current opinion, not the next one
-  // The first rotation day shows the first opinion
   const opinionIndex = Math.max(0, rotationCount - 1) % opinions.length;
   
   return opinionIndex;
 }
 
-// Get current active opinion (rotates on Tuesday, Friday, Sunday)
 export async function getCurrentOpinion(): Promise<Opinion | null> {
-  // Get all active opinions, ordered by published_at (oldest first)
   const { data: opinions, error } = await supabase
     .from('opinions')
     .select('*')
@@ -98,7 +85,6 @@ export async function getCurrentOpinion(): Promise<Opinion | null> {
     return null;
   }
 
-  // Calculate which opinion to show
   const opinionIndex = calculateOpinionIndex(opinions);
   const selectedOpinion = opinions[opinionIndex];
   console.log(`[getCurrentOpinion] Found ${opinions.length} opinions, showing index ${opinionIndex}`);
@@ -106,21 +92,18 @@ export async function getCurrentOpinion(): Promise<Opinion | null> {
   return selectedOpinion;
 }
 
-// Get all past opinions (only opinions with published_at in the past)
 export async function getPastOpinions(): Promise<Opinion[]> {
   const now = new Date();
   const nowISO = now.toISOString();
 
-  // Get current opinion to exclude it from archive
   const currentOpinion = await getCurrentOpinion();
   const currentOpinionId = currentOpinion?.id;
 
-  // Fetch all active opinions that were published in the past
   let query = supabase
     .from('opinions')
     .select('*')
     .eq('is_active', true)
-    .lt('published_at', nowISO) // Only opinions published before now
+    .lt('published_at', nowISO)
     .order('published_at', { ascending: false });
 
   const { data, error } = await query;
@@ -130,7 +113,6 @@ export async function getPastOpinions(): Promise<Opinion[]> {
     return [];
   }
 
-  // Filter out the current opinion if it exists
   const pastOpinions = (data || []).filter(
     (opinion) => opinion.id !== currentOpinionId
   );
@@ -139,7 +121,6 @@ export async function getPastOpinions(): Promise<Opinion[]> {
   return pastOpinions;
 }
 
-// Get comments for an opinion
 export async function getComments(
   opinionId: string,
   sortBy: 'newest' | 'popular' | 'random' = 'newest',
@@ -153,9 +134,8 @@ export async function getComments(
   if (sortBy === 'newest') {
     query = query.order('created_at', { ascending: false });
   } else if (sortBy === 'popular') {
-    query = query.order('created_at', { ascending: false }); // We'll sort by likes after fetching
+    query = query.order('created_at', { ascending: false });
   } else {
-    // random - we'll shuffle after fetching
     query = query.order('created_at', { ascending: false });
   }
 
@@ -166,22 +146,18 @@ export async function getComments(
     return [];
   }
 
-  // Transform the data to include likes count, user liked status, and replies count
   const commentsWithLikes = await Promise.all(
     (data || []).map(async (comment) => {
-      // Get likes count
       const { count: likesCount } = await supabase
         .from('likes')
         .select('*', { count: 'exact', head: true })
         .eq('comment_id', comment.id);
 
-      // Get replies count
       const { count: repliesCount } = await supabase
         .from('replies')
         .select('*', { count: 'exact', head: true })
         .eq('comment_id', comment.id);
 
-      // Check if current user liked this comment (only if sessionId provided)
       let userLiked = false;
       if (sessionId) {
         const { data: userLike } = await supabase
@@ -202,11 +178,9 @@ export async function getComments(
     })
   );
 
-  // Sort by popular if needed
   if (sortBy === 'popular') {
     commentsWithLikes.sort((a, b) => (b.likes_count || 0) - (a.likes_count || 0));
   } else if (sortBy === 'random') {
-    // Shuffle array randomly
     for (let i = commentsWithLikes.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [commentsWithLikes[i], commentsWithLikes[j]] = [commentsWithLikes[j], commentsWithLikes[i]];
@@ -216,7 +190,6 @@ export async function getComments(
   return commentsWithLikes;
 }
 
-// Submit a comment (once per day per session)
 export async function submitComment(
   opinionId: string,
   content: string,
@@ -236,13 +209,11 @@ export async function submitComment(
     return { success: false, error: 'Database connection not configured. Please check your environment variables.' };
   }
 
-  // Get current opinion to determine the "round"
   const currentOpinion = await getCurrentOpinion();
   if (!currentOpinion) {
     return { success: false, error: 'No active opinion available' };
   }
 
-  // Check if user already commented in this round (current opinion)
   const { data: existingComments, error: checkError } = await supabase
     .from('comments')
     .select('id, created_at')
@@ -259,7 +230,6 @@ export async function submitComment(
     return { success: false, error: 'You can only share one reflection per opinion round' };
   }
 
-  // Ensure we're commenting on the current opinion
   if (opinionId !== currentOpinion.id) {
     return { success: false, error: 'You can only comment on the current active opinion' };
   }
@@ -292,12 +262,10 @@ export async function submitComment(
   return { success: true };
 }
 
-// Toggle like on a comment
 export async function toggleLike(
   commentId: string,
   sessionId: string
 ): Promise<{ success: boolean; liked: boolean; error?: string }> {
-  // Check if already liked
   const { data: existingLike } = await supabase
     .from('likes')
     .select('id')
@@ -306,7 +274,6 @@ export async function toggleLike(
     .single();
 
   if (existingLike) {
-    // Unlike
     const { error } = await supabase
       .from('likes')
       .delete()
@@ -319,7 +286,6 @@ export async function toggleLike(
 
     return { success: true, liked: false };
   } else {
-    // Like
     const { error } = await supabase
       .from('likes')
       .insert({
@@ -336,7 +302,6 @@ export async function toggleLike(
   }
 }
 
-// Submit a new opinion (for public submissions)
 export async function submitOpinion(
   content: string
 ): Promise<{ success: boolean; error?: string }> {
@@ -348,13 +313,12 @@ export async function submitOpinion(
     return { success: false, error: 'Opinion cannot be empty' };
   }
 
-  // Insert opinion with is_active = false so it needs review before being published
   const { error } = await supabase
     .from('opinions')
     .insert({
       content: content.trim(),
-      published_at: new Date().toISOString(), // Will be updated when approved
-      is_active: false, // Needs review before being active
+      published_at: new Date().toISOString(),
+      is_active: false,
     });
 
   if (error) {
@@ -365,7 +329,6 @@ export async function submitOpinion(
   return { success: true };
 }
 
-// Get replies for a comment
 export async function getReplies(commentId: string): Promise<Reply[]> {
   const { data, error } = await supabase
     .from('replies')
@@ -381,14 +344,6 @@ export async function getReplies(commentId: string): Promise<Reply[]> {
   return data || [];
 }
 
-// Get current opinion's published_at to determine the "round"
-export async function getCurrentOpinionPublishedAt(): Promise<Date | null> {
-  const currentOpinion = await getCurrentOpinion();
-  if (!currentOpinion) return null;
-  return new Date(currentOpinion.published_at);
-}
-
-// Check how many replies user has made in current round
 export async function getReplyCountForRound(
   sessionId: string,
   opinionId: string
@@ -405,7 +360,6 @@ export async function getReplyCountForRound(
   return count || 0;
 }
 
-// Submit a reply to a comment
 export async function submitReply(
   commentId: string,
   content: string,
@@ -420,7 +374,6 @@ export async function submitReply(
     return { success: false, error: 'Reply cannot be empty' };
   }
 
-  // Get current opinion to ensure we're in the right round
   const currentOpinion = await getCurrentOpinion();
   if (!currentOpinion) {
     return { success: false, error: 'No active opinion available' };
@@ -430,7 +383,6 @@ export async function submitReply(
     return { success: false, error: 'You can only reply to comments in the current active opinion' };
   }
 
-  // Check if user has commented in this round (required to reply)
   const { data: roundComments } = await supabase
     .from('comments')
     .select('id')
@@ -442,13 +394,11 @@ export async function submitReply(
     return { success: false, error: 'You must share a reflection in this round before you can reply' };
   }
 
-  // Check reply limit for current round (max 3 replies per round)
   const replyCount = await getReplyCountForRound(sessionId, opinionId);
   if (replyCount >= 3) {
     return { success: false, error: 'You have reached the limit of 3 replies for this round' };
   }
 
-  // Verify the comment belongs to the current opinion
   const { data: comment } = await supabase
     .from('comments')
     .select('opinion_id')

@@ -197,7 +197,6 @@ export default function CommentsSection({
 
   return (
     <div className="flex flex-col">
-      {/* Header */}
       <div className="mb-3 flex-shrink-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
         <div>
           <h2 className="text-sm sm:text-base font-light text-[#5C3A21] dark:text-white mb-1">
@@ -208,7 +207,6 @@ export default function CommentsSection({
           </p>
         </div>
         
-        {/* Sort toggle */}
         <div className="flex items-center gap-2 sm:gap-3 self-start sm:self-auto">
           <div className="flex items-center gap-0.5 sm:gap-1 bg-white dark:bg-[#253447] rounded-full p-0.5 sm:p-1 border border-[#5C3A21]/20 dark:border-white/20 shadow-sm dark:shadow-none transition-colors duration-200">
             <button
@@ -245,7 +243,6 @@ export default function CommentsSection({
         </div>
       </div>
 
-      {/* Add reflection */}
       {!hasCommented ? (
         <div className="mb-3 flex-shrink-0">
           {!showForm ? (
@@ -322,7 +319,6 @@ export default function CommentsSection({
         </div>
       )}
 
-      {/* Comments list */}
       {comments.length === 0 ? (
         <div className="text-center py-4 sm:py-6">
           <div className="inline-block p-2 sm:p-3 rounded-full bg-white dark:bg-[#253447] border border-gray-300 dark:border-white/20 mb-3 shadow-sm dark:shadow-none transition-colors duration-200">
@@ -356,8 +352,7 @@ export default function CommentsSection({
                 animationFillMode: 'both',
               } : {}}
             >
-              <div className="bg-white dark:bg-[#253447] border border-[#5C3A21]/10 dark:border-white/10 rounded-lg overflow-hidden hover:border-[#8DA070] dark:hover:border-[#5B9BD5] hover:shadow-sm dark:hover:shadow-none transition-all duration-200 flex flex-col shadow-sm dark:shadow-none">
-                {/* Clickable comment content */}
+              <div               className="bg-white dark:bg-[#253447] border border-[#5C3A21]/10 dark:border-white/10 rounded-lg overflow-hidden hover:border-[#8DA070] dark:hover:border-[#5B9BD5] hover:shadow-sm dark:hover:shadow-none transition-all duration-200 flex flex-col shadow-sm dark:shadow-none">
                 <div
                   onClick={() => handleCommentClick(comment.id)}
                   className="text-left p-3 sm:p-4 flex flex-col cursor-pointer hover:bg-[#5C3A21]/5 dark:hover:bg-white/5 transition-colors"
@@ -393,10 +388,8 @@ export default function CommentsSection({
                   </div>
                 </div>
 
-                {/* Replies section - expandable */}
                 {isOpen && (
                   <div className="border-t border-[#5C3A21]/10 dark:border-white/10 bg-[#5C3A21]/5 dark:bg-white/5">
-                    {/* Existing replies */}
                     {commentReplies.length > 0 && (
                       <div className="p-3 sm:p-4 space-y-3">
                         {commentReplies.map((reply) => (
@@ -417,7 +410,6 @@ export default function CommentsSection({
                       </div>
                     )}
 
-                    {/* Reply form */}
                     {canReply ? (
                       <form 
                         onSubmit={(e) => handleReplySubmit(e, comment.id)}
