@@ -14,10 +14,28 @@ export default async function Home() {
 
   return (
     <main className="h-full bg-white dark:bg-[#1a2332] transition-colors duration-200">
-      {/* Mobile: Stacked layout, Desktop: Split view */}
+      {/* Mobile: Opinion above Comments, Desktop: 40% Comments, 60% Opinion */}
       <div className="h-full flex flex-col md:flex-row">
-        {/* Opinion Section - Top on mobile, Right on desktop */}
-        <div className="w-full flex-1 md:h-full md:w-1/2 lg:w-3/5 flex flex-col bg-white dark:bg-[#1a2332] relative transition-colors duration-200 overflow-y-auto scrollbar-hide md:scrollbar-hide order-1 md:order-2">
+        {/* Comments Section - 40% width on desktop, below Opinion on mobile */}
+        <div className="w-full flex-1 md:h-full md:w-2/5 flex flex-col border-t md:border-t-0 md:border-r border-[#5C3A21]/10 dark:border-white/10 bg-white dark:bg-[#1a2332] transition-colors duration-200 overflow-y-auto scrollbar-hide md:scrollbar-hide order-2 md:order-1">
+          {currentOpinion ? (
+            <div className="flex-1 p-4 sm:p-6 md:p-8">
+              <CommentsSection
+                opinionId={currentOpinion.id}
+                initialComments={comments}
+              />
+            </div>
+          ) : (
+            <div className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-8">
+              <p className="text-sm sm:text-base text-[#5C3A21]/70 dark:text-white/70 text-center font-light">
+                No opinion available yet. Please add an opinion to the database.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Opinion Section - 60% width on desktop, above Comments on mobile, centered content */}
+        <div className="w-full flex-1 md:h-full md:w-3/5 flex flex-col bg-white dark:bg-[#1a2332] relative transition-colors duration-200 overflow-y-auto scrollbar-hide md:scrollbar-hide order-1 md:order-2">
           <OrganicBackground />
           {currentOpinion ? (
             <div className="flex-1 flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 relative z-10">
@@ -42,9 +60,6 @@ export default async function Home() {
             </div>
           )}
         </div>
-
-        {/* Comments Section - Bottom on mobile, Left on desktop */}
-        <div className="w-full flex-1 md:h-full md:w-1/2 lg:w-2/5 flex flex-col border-t md:border-t-0 md:border-r border-[#5C3A21]/10 dark:border-white/10 bg-white dark:bg-[#1a2332] transition-colors duration-200 overflow-y-auto scrollbar-hide md:scrollbar-hide order-2 md:order-1">
           {currentOpinion ? (
             <div className="flex-1 p-4 sm:p-6 md:p-8">
               <CommentsSection
