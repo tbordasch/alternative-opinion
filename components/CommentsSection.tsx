@@ -75,6 +75,29 @@ export default function CommentsSection({
     setComments(updatedComments);
   }
 
+  function shuffleComments() {
+    // Shuffle the current comments array
+    const shuffled = [...comments];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    setComments(shuffled);
+  }
+
+  async function handleRandomClick() {
+    if (sortBy !== 'random') {
+      // First time clicking random - load comments with random sort
+      setSortBy('random');
+      const sessionId = getSessionId();
+      const updatedComments = await getComments(opinionId, 'random', sessionId);
+      setComments(updatedComments);
+    } else {
+      // Already in random mode - just shuffle the current comments
+      shuffleComments();
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -186,33 +209,35 @@ export default function CommentsSection({
         </div>
         
         {/* Sort toggle */}
-        <div className="flex items-center gap-0.5 sm:gap-1 bg-white dark:bg-[#253447] rounded-full p-0.5 sm:p-1 self-start sm:self-auto border border-[#5C3A21]/20 dark:border-white/20 shadow-sm dark:shadow-none transition-colors duration-200">
+        <div className="flex items-center gap-2 sm:gap-3 self-start sm:self-auto">
+          <div className="flex items-center gap-0.5 sm:gap-1 bg-white dark:bg-[#253447] rounded-full p-0.5 sm:p-1 border border-[#5C3A21]/20 dark:border-white/20 shadow-sm dark:shadow-none transition-colors duration-200">
+            <button
+              onClick={() => setSortBy('newest')}
+              className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-200 font-light min-w-[45px] sm:min-w-0 ${
+                sortBy === 'newest'
+                  ? 'bg-[#8DA070] dark:bg-[#5B9BD5] text-white shadow-sm dark:shadow-none'
+                  : 'text-[#5C3A21] dark:text-white/70 hover:text-[#8B4513] dark:hover:text-[#5B9BD5]'
+              }`}
+            >
+              New
+            </button>
+            <button
+              onClick={() => setSortBy('popular')}
+              className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-200 font-light min-w-[45px] sm:min-w-0 ${
+                sortBy === 'popular'
+                  ? 'bg-[#8B4513] dark:bg-[#5B9BD5] text-white shadow-sm dark:shadow-none'
+                  : 'text-[#5C3A21] dark:text-white/70 hover:text-[#8DA070] dark:hover:text-[#5B9BD5]'
+              }`}
+            >
+              Liked
+            </button>
+          </div>
           <button
-            onClick={() => setSortBy('newest')}
-            className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-200 font-light min-w-[45px] sm:min-w-0 ${
-              sortBy === 'newest'
-                ? 'bg-[#8DA070] dark:bg-[#5B9BD5] text-white shadow-sm dark:shadow-none'
-                : 'text-[#5C3A21] dark:text-white/70 hover:text-[#8B4513] dark:hover:text-[#5B9BD5]'
-            }`}
-          >
-            New
-          </button>
-          <button
-            onClick={() => setSortBy('popular')}
-            className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-200 font-light min-w-[45px] sm:min-w-0 ${
-              sortBy === 'popular'
-                ? 'bg-[#8B4513] dark:bg-[#5B9BD5] text-white shadow-sm dark:shadow-none'
-                : 'text-[#5C3A21] dark:text-white/70 hover:text-[#8DA070] dark:hover:text-[#5B9BD5]'
-            }`}
-          >
-            Liked
-          </button>
-          <button
-            onClick={() => setSortBy('random')}
-            className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-200 font-light min-w-[45px] sm:min-w-0 ${
+            onClick={handleRandomClick}
+            className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-200 font-light min-w-[45px] sm:min-w-0 bg-white dark:bg-[#253447] border border-[#5C3A21]/20 dark:border-white/20 shadow-sm dark:shadow-none ${
               sortBy === 'random'
                 ? 'bg-[#8B4513] dark:bg-[#5B9BD5] text-white shadow-sm dark:shadow-none'
-                : 'text-[#5C3A21] dark:text-white/70 hover:text-[#8DA070] dark:hover:text-[#5B9BD5]'
+                : 'text-[#5C3A21] dark:text-white/70 hover:text-[#8B4513] dark:hover:text-[#5B9BD5]'
             }`}
           >
             Random
