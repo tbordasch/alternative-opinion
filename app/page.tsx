@@ -13,7 +13,7 @@ export default async function Home() {
   const comments = currentOpinion ? await getComments(currentOpinion.id, 'newest') : [];
 
   return (
-    <main className="h-screen bg-white dark:bg-[#1a2332] transition-colors duration-200">
+    <main className="h-full bg-white dark:bg-[#1a2332] transition-colors duration-200">
       {/* Mobile: Stacked layout, Desktop: Split view */}
       <div className="h-full flex flex-col md:flex-row">
         {/* Opinion Section - Top on mobile, Right on desktop */}
